@@ -1,5 +1,5 @@
 #[derive(Clone)]
 pub struct Position {
-    pub row: usize,
-    pub column: usize
+    pub row: i32,
+    pub column: i32
 }

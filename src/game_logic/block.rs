@@ -1,15 +1,23 @@
 use array2d::Array2D;
 
 use crate::game_logic::position::Position;
+
+trait BlockLogic {
+    fn rotate_cw(&mut self);
+    fn rotate_counter_cw(&mut self);
+    fn move_block(&mut self, rows: i32, columns: i32);
+    fn reset(&mut self);
+    fn tile_positions(self) -> Vec<Position>;
+}
 pub struct Block {
-    tiles: Array2D<Position>,
-    start_offset: Position,
-    offset: Position,
-    id: usize,
-    rotation_state: usize,
+    pub tiles: Array2D<Position>,
+    pub start_offset: Position,
+    pub offset: Position,
+    pub id: usize,
+    pub rotation_state: usize,
 }
 
-impl Block {
+impl BlockLogic for Block {
     fn rotate_cw(&mut self) {
         self.rotation_state = (self.rotation_state + 1) % self.tiles.num_rows() - 1
     }
@@ -22,7 +30,7 @@ impl Block {
         }
     }
 
-    fn move_block(&mut self, rows: usize, columns: usize) {
+    fn move_block(&mut self, rows: i32, columns: i32) {
         self.offset.row = rows;
         self.offset.column = columns;
     }
